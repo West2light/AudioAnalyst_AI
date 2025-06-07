@@ -108,61 +108,13 @@ Tỷ lệ lớp vẫn tương đối cân bằng → Lỗi đến từ việc:
 
 * PANNs Cnn14 cần được chỉnh sửa để **xuất embedding**
 * Các mô hình như RF có thể không đủ mạnh để học tốt trên embedding – nên thử MLP hoặc fine-tuning nếu cần
-
-Dưới đây là bản cập nhật **README.md** hoàn chỉnh, bao gồm cả các bước cải tiến với chuẩn hóa và pooling:
-
----
-
-# 🔊 ESC-50: Danger vs Safe Classification using PANNs (Cnn14)
-
-## 1. Mục tiêu
-
-Phân loại âm thanh thành 2 lớp:
-
-* **Danger** (Nguy hiểm)
-* **Safe** (An toàn)
-
-Sử dụng dataset **ESC-50** (đa dạng, có gán nhãn sẵn) kết hợp với **PANNs – Cnn14** để trích xuất embedding, sau đó huấn luyện mô hình phân loại nhị phân.
-
----
-
-## 2. Chuẩn bị dữ liệu
-
-### ✅ Bước 1: Tổ chức lại dataset
-
-* Viết script `filterAudioToDangerousAndSafe.py` để lọc từ ESC-50 ra 2 thư mục:
-
-  * `dataset/Danger/`
-  * `dataset/Safe/`
-* Gán nhãn:
-
-  * Danger → `1`
-  * Safe → `0`
-
-### ✅ Bước 2: Trích xuất embedding
-
-* Sử dụng model `Cnn14` từ PANNs (pretrained)
-* Chỉnh sửa trong `models.py` để trả về `embedding` thay vì logits:
-
-```python
-return {
-    'clipwise_output': x,
-    'embedding': embedding
-}
-```
-
-* Viết script `extractEmbeddingCnn14.py` để tạo `audio_embeddings.csv`
-
----
-
-## 3. Vấn đề ban đầu và nguyên nhân
-
 ### ❌ Các mô hình không học được lớp Danger
 
-* Random Forest hoặc Logistic Regression dự đoán toàn bộ thành Safe (0)
+* Logistic Regression dự đoán toàn bộ thành Safe (0)
 * Ví dụ (Confusion Matrix – Logistic Regression):
 
-![conf\_lr\_raw](./path_to_image.png)
+![image](https://github.com/user-attachments/assets/2d396061-1c6b-4baa-8755-a944d93e284d)
+
 
 **Phân tích:**
 
@@ -213,7 +165,8 @@ True Safe    |  23  |   17
 True Danger  |   9  |   23
 ```
 
-![conf\_lr\_mean](./path_to_logistic_mean_confusion.png)
+![image](https://github.com/user-attachments/assets/47c0c68f-5b37-4f19-a051-b07b2c8a046e)
+
 
 ---
 
@@ -229,8 +182,7 @@ True Danger  |   9  |   23
 True Safe    |  31  |   9
 True Danger  |   9  |  23
 ```
-
-![conf\_rf\_mean](./path_to_rf_mean_confusion.png)
+![image](https://github.com/user-attachments/assets/b17c6b98-a5c9-4b4e-9368-26548cf7a85a)
 
 ---
 
@@ -268,8 +220,5 @@ project/
 └── README.md
 ```
 
----
-
-Bạn muốn mình tạo sẵn template code cho `mergeFeat_x.py` hoặc mô hình Logistic Regression không?
 
 
