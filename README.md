@@ -123,7 +123,7 @@ Tỷ lệ lớp vẫn tương đối cân bằng → Lỗi đến từ việc:
 
 ---
 
-## 4. Cải tiến: Gộp embedding bằng Pooling
+## 77. Cải tiến: Gộp embedding bằng Pooling
 
 ### ✅ Vấn đề:
 
@@ -144,7 +144,7 @@ merged = np.mean([feat_0, feat_1, ..., feat_14], axis=0)
 
 ---
 
-## 5. Huấn luyện lại sau khi merge
+## 88. Huấn luyện lại sau khi merge
 
 ### Logistic Regression (chuẩn hóa + pooling)
 
@@ -186,7 +186,7 @@ True Danger  |   9  |  23
 
 ---
 
-## 6. Kết luận
+## 99. Kết luận
 
 | Mô hình            | Accuracy | Nhận biết Danger |
 | ------------------ | -------- | ---------------- |
